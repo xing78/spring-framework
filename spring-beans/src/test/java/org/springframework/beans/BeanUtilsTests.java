@@ -25,7 +25,9 @@ import java.util.List;
 import org.junit.Test;
 
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceEditor;
 import org.springframework.tests.sample.beans.DerivedTestBean;
@@ -273,6 +275,13 @@ public class BeanUtilsTests {
 						keyDescr.getPropertyType(), propertyDescriptor.getPropertyType());
 			}
 		}
+	}
+
+	@Test
+	public void testXmlBeanFactory() {
+		BeanFactory bf = new XmlBeanFactory(new ClassPathResource("org\\springframework\\beans\\factory\\FactoryBeanLookupTests-context.xml"));
+		TestBean testBean = (TestBean) bf.getBean("test");
+
 	}
 
 	private void assertSignatureEquals(Method desiredMethod, String signature) {
