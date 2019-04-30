@@ -77,6 +77,11 @@ public class DelegatingEntityResolver implements EntityResolver {
 	}
 
 
+	/**
+	 * EntityResolver 的作用是项目本身就可以提供一个如何寻找DTD 声明的方法，即由程序来
+	 * 实现寻找 DTD 声明的过程，比如我们将 DTD 文件放到项目中某处 ，在实现时直接将此文档读
+	 * 取并返回给 SAX 即可 这样就避免了通过网络来寻找相应的声明
+	 */
 	@Override
 	@Nullable
 	public InputSource resolveEntity(@Nullable String publicId, @Nullable String systemId)
@@ -84,14 +89,16 @@ public class DelegatingEntityResolver implements EntityResolver {
 
 		if (systemId != null) {
 			if (systemId.endsWith(DTD_SUFFIX)) {
+				// 解析dtd
 				return this.dtdResolver.resolveEntity(publicId, systemId);
 			}
 			else if (systemId.endsWith(XSD_SUFFIX)) {
+				// 通过调用META-INF/Spring.schemas解析
 				return this.schemaResolver.resolveEntity(publicId, systemId);
 			}
 		}
 
-		// Fall back to the parser's default behavior.
+		// Fall back to the parser's default behavior(回到默认的解析行为).
 		return null;
 	}
 

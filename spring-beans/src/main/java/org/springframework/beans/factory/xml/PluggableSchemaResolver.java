@@ -142,7 +142,7 @@ public class PluggableSchemaResolver implements EntityResolver {
 	}
 
 	/**
-	 * Load the specified schema mappings lazily.
+	 * Load the specified schema mappings lazily (延迟加载指定的映射).
 	 */
 	private Map<String, String> getSchemaMappings() {
 		Map<String, String> schemaMappings = this.schemaMappings;
